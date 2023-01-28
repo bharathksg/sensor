@@ -2,18 +2,17 @@ import logging
 import os
 from datetime import datetime
 
-from from_root import from_root
+log_dir:str="logs"
+os.makedirs(log_dir,exist_ok=True)
 
-LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
+def get_log_file_name():
+    return f"logs_{datetime.now().strftime('%m/%d/%Y, %H:%M:%S')}"
 
-logs_path = os.path.join(from_root(), "logs", LOG_FILE)
-
-os.makedirs(logs_path, exist_ok=True)
-
-LOG_FILE_PATH = os.path.join(logs_path, LOG_FILE)
+log_file_name=get_log_file_name()
+log_file_path=os.path.join(log_dir,log_file_name)
 
 logging.basicConfig(
-    filename=LOG_FILE_PATH,
-    format="[ %(asctime)s ] %(name)s - %(levelname)s - %(message)s",
+    filename=log_file_path,
     level=logging.INFO,
+    format="[%(asctime)s];%(levelname)s;%(message)s"   
 )
